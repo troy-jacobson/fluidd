@@ -287,9 +287,7 @@ export default class GcodePreview extends Mixins(StateMixin) {
   }
 
   get svgParts () {
-    console.log('In svgParts')
     const svg = this.$store.getters['gcodePreview/getPartsSVG']
-    console.log(svg)
     return svg
   }
 
@@ -305,8 +303,6 @@ export default class GcodePreview extends Mixins(StateMixin) {
   }
 
   onPartClick (id: string, e?: any) {
-    console.log('Clicked on ' + id)
-    console.log(e)
     // Let's pick a random color between #000000 and #FFFFFF
     const color = Math.round(Math.random() * 0xFFFFFF)
 
