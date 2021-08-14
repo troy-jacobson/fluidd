@@ -10,6 +10,7 @@ import { DevicePowerState } from './power/types'
 import { HistoryState } from './history/types'
 import { VersionState } from './version/types'
 import { GcodePreviewState } from './gcodePreview/types'
+import { PartsState } from './parts/types'
 import { LayoutState } from './layout/types'
 import { MeshState } from './mesh/types'
 import { NotificationsState } from './notifications/types'
@@ -31,6 +32,7 @@ export interface RootState {
   history?: HistoryState;
   version?: VersionState;
   gcodePreview?: GcodePreviewState;
+  parts?: PartsState;
   notifications?: NotificationsState;
 }
 

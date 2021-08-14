@@ -1,5 +1,6 @@
 /* eslint-disable no-fallthrough */
-import { ArcMove, LinearMove, Move, Part, PositioningMode, Rotation } from '@/store/gcodePreview/types'
+import { ArcMove, LinearMove, Move, PositioningMode, Rotation } from '@/store/gcodePreview/types'
+import { Part } from '@/store/parts/types'
 import { pick } from 'lodash'
 import { Subject } from 'threads/observable'
 
@@ -220,5 +221,5 @@ export default function parseGcode (gcode: string, subject: Subject<number>) {
 
   subject.next(toolhead.filePosition)
 
-  return [moves, parts]
+  return [moves, Object.values(parts)]
 }

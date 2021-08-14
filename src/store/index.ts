@@ -23,6 +23,7 @@ import { mesh } from './mesh'
 import { notifications } from './notifications'
 import { wait } from './wait'
 import { gcodePreview } from './gcodePreview'
+import { parts } from './parts'
 
 Vue.use(Vuex)
 
@@ -47,7 +48,8 @@ export default new Vuex.Store<RootState>({
     mesh,
     notifications,
     wait,
-    gcodePreview
+    gcodePreview,
+    parts
   },
   mutations: {},
   actions: {
