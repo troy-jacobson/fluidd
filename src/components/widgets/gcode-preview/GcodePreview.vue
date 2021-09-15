@@ -64,7 +64,7 @@
                 :d="svgPathNext.extrusions"
                 :stroke-width="extrusionLineWidth"/>
         </g>
-        <exclude-objects />
+        <exclude-objects v-if="showExcludeObjects"/>
       </g>
     </svg>
   </div>
@@ -152,6 +152,10 @@ export default class GcodePreview extends Mixins(StateMixin) {
 
   get shapeRendering () {
     return this.panning ? 'optimizeSpeed' : 'geometricPrecision'
+  }
+
+  get showExcludeObjects () {
+    return true
   }
 
   get flipX (): boolean {

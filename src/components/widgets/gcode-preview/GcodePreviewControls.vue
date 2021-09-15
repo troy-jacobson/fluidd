@@ -104,7 +104,6 @@ export default class GcodePreviewControls extends Mixins(StateMixin, FilesMixin)
 
   resetFile () {
     this.$store.dispatch('gcodePreview/reset')
-    this.$store.dispatch('parts/reset')
   }
 }
 </script>

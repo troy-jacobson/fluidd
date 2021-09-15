@@ -26,7 +26,6 @@ export interface LinearMove {
   e?: number;
 
   filePosition?: number;
-  part?: string;
 }
 
 export interface ArcMove extends LinearMove {
