@@ -1,6 +1,7 @@
 export interface PartsState {
   parts: { [key: string]: Part};
   excludedParts: string[];
+  printState: string;
 }
 
 export interface Point {
@@ -11,5 +12,5 @@ export interface Point {
 export interface Part {
    name: string;
    outline: Point[];
-   target: Point;
+   target: Point | null;
 }
