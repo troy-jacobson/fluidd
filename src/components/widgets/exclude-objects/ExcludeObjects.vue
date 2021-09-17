@@ -1,7 +1,7 @@
 <template>
     <g id="parts" class="layer">
         <path v-for="name in outlineNames" :key="name+'bounds'"
-                :class="isPartExcluded(name) ? 'partOutline partExcluded' : 'partOutline'"
+                :class="outlineClasses(name)"
             :d="partSVG(name)"
         />
         <svg width="7" height="7" viewBox="0 0 24 24" class="partIcon"
@@ -49,7 +49,16 @@ export default class ExcludeObjects extends Mixins(StateMixin) {
   }
 
   iconClasses (name: string) {
-    return this.isPartExcluded(name) ? 'partExcluded' : 'partIncluded'
+    return (this.isPartExcluded(name) ? 'partExcluded' : 'partIncluded') +
+           (this.isPartCurrent(name) ? ' partCurrent' : '')
+  }
+
+  outlineClasses (name: string) {
+    const state = this.$store.getters['parts/getPrintState']
+    const excluded = this.isPartExcluded(name)
+    const current = (state === 'printing' || state === 'paused') && !excluded && this.isPartCurrent(name)
+    return 'partOutline' + (excluded ? ' partExcluded' : ' partIncluded') +
+           (current ? ' partCurrent' : '')
   }
 
   partSVG (name: string) {
@@ -63,6 +72,10 @@ export default class ExcludeObjects extends Mixins(StateMixin) {
 
   partPos (name: string) {
     return this.$store.getters['parts/getPartPos'](name)
+  }
+
+  isPartCurrent (name: string) {
+    return this.$store.getters['parts/getIsPartCurrent'](name)
   }
 
   isPartExcluded (name: string) {
@@ -94,23 +107,33 @@ export default class ExcludeObjects extends Mixins(StateMixin) {
   stroke-linejoin: round;
 }
 
-.layer .partIcon {
-  filter: brightness(150%);
-  fill-opacity: 15%
-}
-
 .layer .partIcon .partIncluded {
   pointer-events: all;
   fill: var(--v-success-base);
 }
 
+.layer .partIcon .partCurrent {
+  fill: var(--v-info-base);
+  fill-opacity: 30%;
+}
+
+.layer .partIcon {
+  filter: brightness(150%);
+  fill: var(--v-success-base);
+  fill-opacity: 15%;
+  pointer-events: none;
+}
+
 .layer .partIcon .partExcluded {
   filter: brightness(75%);
-  pointer-events: none;
 }
 
 .layer .partIcon .partIncluded:hover {
   fill-opacity: 50%;
+}
+
+.layer .partOutline.partCurrent {
+  stroke-width: .5;
 }
 
 .layer .partOutline {
