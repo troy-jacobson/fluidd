@@ -58,7 +58,7 @@ export const handleExcludeObjectChange = (payload: any, state: any, dispatch: an
   }
 }
 
-export const handlePrintStateChange = (payload: any, state: any, dispatch: any) => {
+export const handlePrintStateChange = (payload: any) => {
   // For every notify - if print_stats.state changes from standby -> printing,
   // then record an entry in our print history.
   // If the state changes from printing -> complete, then record the finish time.
@@ -67,23 +67,23 @@ export const handlePrintStateChange = (payload: any, state: any, dispatch: any) 
     'state' in payload.print_stats
   ) {
     if (
-      state.printer?.printer.print_stats.state !== 'printing' &&
+      store.state.printer?.printer.print_stats.state === 'standby' &&
       payload.print_stats.state === 'printing'
     ) {
       // This is a new print starting...
-      dispatch('printer/onPrintStart', payload, { root: true })
+      store.dispatch('printer/onPrintStart', payload)
     } else if (
-      state.printer?.printer.print_stats.state === 'printing' &&
+      store.state.printer?.printer.print_stats.state === 'printing' &&
       payload.print_stats.state === 'complete'
     ) {
       // This is a completed print...
-      dispatch('printer/onPrintEnd', payload, { root: true })
+      store.dispatch('printer/onPrintEnd', payload)
     } else if (
-      state.printer?.printer.print_stats.state === 'printing' &&
+      store.state.printer?.printer.print_stats.state === 'printing' &&
       payload.print_stats.state === 'standby'
     ) {
       // This is a cancelled print...
-      dispatch('printer/onPrintEnd', payload, { root: true })
+      store.dispatch('printer/onPrintEnd', payload)
     }
   }
 }

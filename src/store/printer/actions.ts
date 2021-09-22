@@ -59,7 +59,7 @@ export const actions: ActionTree<PrinterState, RootState> = {
    * Print start confirmation.
    * Fires as a watch on a printer state change.
    */
-  async onPrintStart ({ dispatch }, payload) {
+  async onPrintStart (_, payload) {
     consola.debug('Print start detected', payload)
   },
 
@@ -129,7 +129,7 @@ export const actions: ActionTree<PrinterState, RootState> = {
       // We do this prior to commiting the notify so we can
       // compare the before and after.
       handleCurrentFileChange(payload)
-      handlePrintStateChange(payload, rootState, dispatch)
+      handlePrintStateChange(payload)
       handleExcludeObjectChange(payload, rootState, dispatch)
       handleSystemStatsChange(payload)
       handleMcuStatsChange(payload)
