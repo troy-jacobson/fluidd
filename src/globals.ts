@@ -95,7 +95,7 @@ import {
   mdiPencilLock,
   mdiLockReset,
   mdiCubeScan,
-  mdiHandRight,
+  mdiHandBackRight,
   mdiThermometerAlert,
   mdiShieldAccount,
   mdiContentCopy,
@@ -112,7 +112,8 @@ import {
   mdiHarddisk,
   mdiLayersTripleOutline,
   mdiMessageTextOutline,
-  mdiSwapVertical
+  mdiSwapVertical,
+  mdiFullscreen
 } from '@mdi/js'
 
 /**
@@ -127,7 +128,7 @@ export const Globals = Object.freeze({
   NETWORK_REQUEST_TIMEOUT: 0,
   KLIPPY_RETRY_DELAY: 1500,
   SOCKET_RETRY_DELAY: 2000,
-  SOCKET_PING_INTERVAL: 5000,
+  SOCKET_PING_INTERVAL: 10000,
   CONSOLE_HISTORY_RETENTION: 1000, // total count
   CONSOLE_RECEIVE_PREFIX: '',
   CONSOLE_SEND_PREFIX: '$ ',
@@ -202,7 +203,7 @@ export const Icons = Object.freeze({
   restartAlert: mdiRestartAlert,
   update: mdiUpdate,
   warning: mdiAlert,
-  error: mdiHandRight,
+  error: mdiHandBackRight,
   thermometer: mdiThermometerLow,
   bell: mdiBellOutline,
   fireAlert: mdiFireAlert,
@@ -290,7 +291,8 @@ export const Icons = Object.freeze({
   codeJson: mdiCodeJson,
   desktopTower: mdiDesktopTower,
   harddisk: mdiHarddisk,
-  message: mdiMessageTextOutline
+  message: mdiMessageTextOutline,
+  fullScreen: mdiFullscreen
 })
 
 export const Waits = Object.freeze({
@@ -314,6 +316,8 @@ export const Waits = Object.freeze({
   onSetFanSpeed: 'onSetFanSpeed',
   onSetOutputPin: 'onSetOutputPin',
   onZAdjust: 'onZAdjust',
+  onZApply: 'onZApply',
+  onSaveConfig: 'onSaveConfig',
   onRetract: 'onRetract',
   onExtrude: 'onExtrude',
   onMeshCalibrate: 'onMeshCalibrate',
