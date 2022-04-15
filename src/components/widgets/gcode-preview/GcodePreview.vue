@@ -180,6 +180,7 @@
             :stroke-width="extrusionLineWidth"
           />
         </g>
+        <exclude-objects v-if="showExcludeObjects"/>
       </g>
     </svg>
   </div>
@@ -191,8 +192,13 @@ import StateMixin from '@/mixins/state'
 import panzoom, { PanZoom } from 'panzoom'
 import { BBox, LayerNr, LayerPaths } from '@/store/gcodePreview/types'
 import { GcodePreviewConfig } from '@/store/config/types'
+import ExcludeObjects from '@/components/widgets/exclude-objects/ExcludeObjects.vue'
 
-@Component({})
+@Component({
+  components: {
+    ExcludeObjects
+  }
+})
 export default class GcodePreview extends Mixins(StateMixin) {
   @Prop({
     type: Boolean,
@@ -271,6 +277,19 @@ export default class GcodePreview extends Mixins(StateMixin) {
 
   get shapeRendering () {
     return this.panning ? 'optimizeSpeed' : 'geometricPrecision'
+  }
+
+  get showExcludeObjects () {
+    const file = this.$store.getters['gcodePreview/getFile']
+    if (!file) {
+      return true
+    }
+    const printerFile = this.$store.state.printer.printer.current_file
+
+    if (printerFile.filename) {
+      return (file.path + '/' + file.filename) === (printerFile.path + '/' + printerFile.filename)
+    }
+    return false
   }
 
   get flipX (): boolean {
