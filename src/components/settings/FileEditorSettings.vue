@@ -1,22 +1,25 @@
 <template>
   <div>
-    <v-subheader id="editor">{{ $t('app.setting.title.file_editor') }}</v-subheader>
+    <v-subheader id="editor">
+      {{ $t('app.setting.title.file_editor') }}
+    </v-subheader>
     <v-card
       :elevation="5"
       dense
-      class="mb-4">
+      class="mb-4"
+    >
       <app-setting
         :title="$t('app.setting.label.confirm_dirty_editor_close')"
       >
         <v-switch
-          @click.native.stop
           v-model="confirmDirtyEditorClose"
           hide-details
           class="mb-5"
-        ></v-switch>
+          @click.native.stop
+        />
       </app-setting>
 
-      <v-divider></v-divider>
+      <v-divider />
 
       <app-setting :title="$t('app.setting.label.auto_edit_extensions')">
         <v-combobox
@@ -29,7 +32,20 @@
           small-chips
           append-icon=""
           deletable-chips
-        ></v-combobox>
+        />
+      </app-setting>
+
+      <v-divider />
+
+      <app-setting :title="$t('app.setting.label.reset')">
+        <app-btn
+          outlined
+          small
+          color="primary"
+          @click="handleReset"
+        >
+          {{ $t('app.setting.btn.reset') }}
+        </app-btn>
       </app-setting>
     </v-card>
   </div>
@@ -38,6 +54,7 @@
 <script lang="ts">
 import { Component, Mixins } from 'vue-property-decorator'
 import StateMixin from '@/mixins/state'
+import { defaultState } from '@/store/config/index'
 
 @Component({
   components: {}
@@ -66,6 +83,14 @@ export default class FileEditorSettings extends Mixins(StateMixin) {
     this.$store.dispatch('config/saveByPath', {
       path: 'uiSettings.editor.autoEditExtensions',
       value: value.sort(),
+      server: true
+    })
+  }
+
+  handleReset () {
+    this.$store.dispatch('config/saveByPath', {
+      path: 'uiSettings.editor',
+      value: defaultState().uiSettings.editor,
       server: true
     })
   }

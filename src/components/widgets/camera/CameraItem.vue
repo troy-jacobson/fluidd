@@ -1,36 +1,44 @@
 <template>
   <div>
-    <v-sheet :elevation="0" rounded v-on="$listeners" class="camera-container">
+    <v-sheet
+      :elevation="0"
+      rounded
+      class="camera-container"
+      v-on="$listeners"
+    >
       <img
         v-if="camera.type === 'mjpgstream' || camera.type === 'mjpgadaptive'"
+        ref="camera_image"
         :src="cameraUrl"
         class="camera-image"
-        ref="camera_image"
         @load="handleImgLoad"
-      />
+      >
 
       <video
         v-if="camera.type === 'ipstream'"
+        ref="camera_image"
         :src="cameraUrl"
         autoplay
         class="camera-image"
-        ref="camera_image"
       />
 
       <iframe
         v-if="camera.type === 'iframe'"
+        ref="camera_image"
         :src="cameraUrl"
         class="camera-image"
-        ref="camera_image"
         :height="cameraHeight"
         frameBorder="0"
       />
 
-      <div v-if="camera.name" class="camera-name">
+      <div
+        v-if="camera.name"
+        class="camera-name"
+      >
         {{ camera.name }}
       </div>
       <div
-        v-if="this.camera.type === 'mjpgadaptive' && this.time"
+        v-if="camera.type === 'mjpgadaptive' && time"
         class="camera-frames"
       >
         fps: {{ currentFPS }}
@@ -39,7 +47,10 @@
         v-if="cameraFullScreenUrl"
         class="camera-fullscreen"
       >
-        <a :href="cameraFullScreenUrl" target="_blank">
+        <a
+          :href="cameraFullScreenUrl"
+          target="_blank"
+        >
           <v-icon>$fullScreen</v-icon>
         </a>
       </div>
@@ -166,7 +177,7 @@ export default class CameraItem extends Vue {
       this.camera &&
       this.camera.type === 'mjpgadaptive'
     ) {
-      const fpsTarget = document.hasFocus() ? (this.camera.fpstarget || 10) : (this.camera.fpsidletarget || 1)
+      const fpsTarget = (!document.hasFocus() && this.camera.fpsidletarget) || this.camera.fpstarget || 10
       const end_time = performance.now()
       const current_time = end_time - this.start_time
       this.time = (this.time * this.time_smoothing) + (current_time * (1.0 - this.time_smoothing))

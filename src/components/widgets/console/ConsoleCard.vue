@@ -4,30 +4,46 @@
     icon="$console"
     card-classes="d-flex flex-column"
     content-classes="flex-grow-1 flow-shrink-0"
-    menuBreakpoint="none"
-    menuIcon="$cog"
-    :draggable="true"
+    menu-breakpoint="none"
+    menu-icon="$cog"
+    :draggable="!fullScreen"
+    :collapsable="!fullScreen"
     layout-path="dashboard.console-card"
-    @collapsed="handleCollapseChange">
-
-    <template v-slot:title>
-      <v-icon left>$console</v-icon>
+    @collapsed="handleCollapseChange"
+  >
+    <template #title>
+      <v-icon left>
+        $console
+      </v-icon>
       <span class="font-weight-light">{{ $t('app.general.title.console') }}</span>
       <app-inline-help
         bottom
         small
         :tooltip="$t('app.console.placeholder.command')"
-      ></app-inline-help>
+      />
     </template>
 
-    <template v-slot:menu>
-
+    <template #menu>
       <app-btn
         v-if="scrollingPaused"
-        @click="console.scrollToLatest(true)"
         color=""
-        fab x-small text>
-        <v-icon>{{flipLayout ? '$up' : '$down'}}</v-icon>
+        fab
+        x-small
+        text
+        @click="console.scrollToLatest(true)"
+      >
+        <v-icon>{{ flipLayout ? '$up' : '$down' }}</v-icon>
+      </app-btn>
+
+      <app-btn
+        v-if="!fullScreen"
+        color=""
+        fab
+        small
+        text
+        @click="$filters.routeTo($router, '/console')"
+      >
+        <v-icon>$fullScreen</v-icon>
       </app-btn>
 
       <app-btn-collapse-group
@@ -40,49 +56,45 @@
           color="primary"
           hide-details
           class="mx-2 mt-2"
-        >
-        </v-checkbox>
+        />
         <v-checkbox
           v-model="autoScroll"
           :label="$t('app.console.label.auto_scroll')"
           color="primary"
           hide-details
           class="mx-2 mb-2"
-        >
-        </v-checkbox>
+        />
         <v-checkbox
           v-model="flipLayout"
           :label="$t('app.console.label.flip_layout')"
           color="primary"
           hide-details
           class="mx-2 mb-2"
-        >
-        </v-checkbox>
+        />
 
         <template v-for="(filter, index) in filters">
           <v-divider
+            v-if="index === 0"
             :key="index"
-            v-if="index === 0" />
+          />
           <v-checkbox
+            :key="filter.id"
             v-model="filter.enabled"
             :label="filter.name"
-            :key="filter.id"
             color="primary"
             hide-details
-            class="mx-2 mt-2">
-          </v-checkbox>
+            class="mx-2 mt-2"
+          />
         </template>
-
       </app-btn-collapse-group>
     </template>
 
     <console
       ref="console"
-      :scrollingPaused.sync="scrollingPaused"
+      :scrolling-paused.sync="scrollingPaused"
       :items="items"
-      :height="300"
-    ></console>
-
+      :height="fullScreen ? 816 : 300"
+    />
   </collapsable-card>
 </template>
 
@@ -100,6 +112,9 @@ import { ConsoleEntry } from '@/store/console/types'
 export default class ConsoleCard extends Mixins(StateMixin) {
   @Prop({ type: Boolean, default: true })
   enabled!: boolean
+
+  @Prop({ type: Boolean, default: false })
+  fullScreen!: boolean
 
   @Ref('console') console!: Console
 

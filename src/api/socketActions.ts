@@ -31,6 +31,28 @@ export const SocketActions = {
     )
   },
 
+  async machineServicesStart (service: string) {
+    const wait = Waits.onServiceStart
+    baseEmit(
+      'machine.services.start', {
+        dispatch: 'void',
+        params: { service },
+        wait
+      }
+    )
+  },
+
+  async machineServicesStop (service: string) {
+    const wait = Waits.onServiceStop
+    baseEmit(
+      'machine.services.stop', {
+        dispatch: 'void',
+        params: { service },
+        wait
+      }
+    )
+  },
+
   async machineReboot () {
     baseEmit(
       'machine.reboot', {
@@ -278,6 +300,18 @@ export const SocketActions = {
         dispatch: 'server/onServerInfo'
       }
     )
+  },
+
+  async identify () {
+    baseEmit('server.connection.identify', {
+      dispatch: 'socket/onConnectionId',
+      params: {
+        client_name: Globals.APP_NAME,
+        version: `${store.state.version?.fluidd.version || '0.0.0'}-${store.state.version?.fluidd.hash || 'unknown'}`.trim(),
+        type: 'web',
+        url: Globals.GITHUB_REPO
+      }
+    })
   },
 
   async serverConfig () {

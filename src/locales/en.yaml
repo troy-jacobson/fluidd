@@ -24,7 +24,7 @@ app:
         printer
   chart:
     label:
-      current: Temp
+      current: Actual
       item: Name
       'off': Chart off
       'on': Chart on
@@ -222,6 +222,7 @@ app:
       'off': 'Off'
       password: Password
       power: Power
+      pressure_advance: Pressure Advance
       printers: Printers
       progress: Progress
       requested_speed: Speed
@@ -230,6 +231,7 @@ app:
       save_as: Save As
       services: Services
       slicer: Slicer
+      smooth_time: Smooth Time
       speed: Speed
       sqv: Square Corner Velocity
       total: Total
@@ -258,6 +260,7 @@ app:
       error:
         arrayofnums: Only numbers
         exists: Already exists
+        invalid_number: Invalid Number
         invalid_url: Invalid URL
         invalid_expression: Invalid Expression
         max: Max %{max}
@@ -269,6 +272,8 @@ app:
         confirm: Are you sure?
         confirm_reboot_host: Are you sure? This will reboot your host system.
         confirm_shutdown_host: Are you sure? This will shutdown your host system.
+        confirm_service_restart: Are you sure you want to restart the %{name} service?
+        confirm_service_stop: Are you sure you want to stop the %{name} service?
         confirm_power_device_toggle: Are you sure? This will toggle the power of this device.
         unsaved_changes: You have unsaved changes. Are you sure you want to close this file?
         apply_z_offset_endstop: >-
@@ -310,12 +315,13 @@ app:
       console: Console
       endstops: Endstops
       fans_outputs: Fans & Outputs
-      gcode_preview: Gcode Preview [ Beta ]
+      gcode_preview: Gcode Preview
       history: History
       home: Home
       jobs: Jobs
       limits: Printer Limits
       macros: Macros
+      other_files: Other Files
       retract: Firmware Retraction
       runout_sensors: Runout Sensors
       settings: Settings
@@ -337,6 +343,7 @@ app:
   printer:
     state:
       busy: Busy
+      cancelled: Cancelled
       complete: Complete
       idle: Idle
       loading: Loading
@@ -347,6 +354,7 @@ app:
   setting:
     btn:
       add_camera: Add Camera
+      add_category: Add Category
       add_filter: Add Filter
       add_thermal_preset: Add Preset
       add_user: Add user
@@ -409,6 +417,7 @@ app:
       theme_preset: Community preset
       thermal_preset_gcode: GCode
       thermal_preset_name: Preset Name
+      toolhead_move_distances: Toolhead distance values
       type: Type
       z_adjust_values: Z Adjust values
       date_time_format: Date and Time format
